@@ -1,0 +1,298 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="robots" content="index, follow">
+   <meta name="rating" content="General">
+   <meta name="distribution" content="Global">
+   <meta name="Date-Creation-yyyymmdd" content="20001208">
+   <meta name="Date-Revision-yyyymmdd" content="20010330">
+   <meta name="revisit-after" content="30 days">
+   <meta name="description" content="Implementation of the Optimized Link State Routing Protocol for wireless ad hoc networks">
+   <meta name="keywords" content="olsr,implementation,userspace">
+   <meta name="author" content="Anis LAOUITI">
+   <meta name="reply-to" content="anis.laouiti@inria.fr">
+   <meta name="owner" content="anis.laouiti@inria.fr">
+   <meta name="copyright" content="HIPERCOM 2000">
+   <title> OLSR IMPLEMENTATION</title>
+</head>
+<body background="tn_cuir13_jpg.jpg">
+
+<center><img SRC="olsr_.gif" height=198 width=654></center>
+
+<hr WIDTH="100%">
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>&nbsp;</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+This page collects the <a
+href="http://www.inria.fr/recherche/equipes/hipercom.en.html">HIPERCOM
+</a> work related to OLSR, including drafts, papers and code. 
+<BR><BR>
+<a href="#intro"><h3>Introduction</h3></a>
+<a href="#drafts"><h3>Internet Drafts</h3></a>
+<a href="#code"><h3>Implementation code</h3></a>
+<a href="#simu"><h3>Simulation code</h3></a>
+<a href="#papers"><h3>Related Publications</h3></a>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+&nbsp;</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+<hr WIDTH="100%">
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>&nbsp;</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+
+<a name="intro"><h1>
+Introduction</h1></a>
+
+<P>
+The Optimized Link State Routing Protocol (OLSR) is developed for mobile ad
+hoc networks. It operates as a table driven and proactive protocol, thus
+exchanges topology information with other nodes of the network regularly.
+The nodes which are selected as a multipoint relay (MPR) by some neighbor
+nodes announce this information periodically in their control messages.
+Thereby, a node announces to the network, that it has reachability to the
+nodes which have selected it as MPR. In route calculation, the MPRs are used
+to form the route from a given node to any destination in the network. The
+protocol uses the MPRs to facilitate efficient flooding of control messages
+in the net- work.
+OLSR inherits the concept of forwarding and relaying from HIPERLAN (a MAC
+layer protocol) which is standardized by ETSI.
+</P>
+
+<UL>
+<LI><a href="http://menetou.inria.fr/~viennot/mpr/index.html">Some tips 
+about multipoint relays</a></LI>
+</UL>
+
+<hr WIDTH="100%">
+<a name="drafts"><h1>
+IETF drafts</h1></a>
+
+OLSR is a proactive protocol submitted to the <a href="http://www.ietf.org">IETF</a>
+working group <a href="http://www.ietf.org/html.charters/manet-charter.html">Manet</a>
+.
+
+<h3>OLSR drafts</h3>
+
+<ul>
+<li>
+The current version draft of OLSR&nbsp; is version 5 (<a href="draft-ietf-manet-olsr-05.txt">draft-ietf-manet-olsr-05.txt</a>).
+The most important change from version 4 to version 5 is&nbsp; the introduction
+of support for multiple interfaces.
+
+<li>
+You can find the specification of the implementation here (<a href="draft-ietf-manet-olsr-03.txt">draft-ietf-manet-olsr-03.txt</a>
+).
+
+<li>
+&nbsp;OLSR&nbsp; draft&nbsp; version 4 is available here (<a href="draft-ietf-manet-olsr-04.txt">draft-ietf-manet-olsr-04.txt</a>).
+</ul>
+
+<h3>Related drafts</h3>
+
+<ul>
+<li> Extension for multicast (<a
+href="draft-ietf-manet-olsr-molsr.txt">draft-ietf-manet-olsr-molsr.txt</a>)
+</ul>
+
+
+<hr WIDTH="100%">
+<a name="code"><h1>
+Implementation code of Optimized Link State Routing</h1></a>
+This implementation is conform with the version
+3 of the OLSR draft and is designed for linux 2.x.x.
+<ul>
+<li>
+This code&nbsp; runs in user
+space.</li>
+
+<li>
+No Kernel modification required.</li>
+</ul>
+
+
+<h3>
+Code</h3>
+The current release&nbsp; is compliant to <a
+href="draft-ietf-manet-olsr-03.txt">draft-ietf-manet-olsr-03.txt</a>
+and available as a gzipped tar file.
+<ul>
+<li>
+<a href="http://hipercom.inria.fr/olsr/olsrd.tar.gz">linux source code</a></li>
+</ul>
+
+<h3>
+Installation &amp; Use</h3>
+After unpacking olsrd.tar.gz in home directory, compile and install as
+described after:
+<ul>
+<li>
+&nbsp; run `` make all '' in the new olsrd directory.</li>
+
+<li>
+&nbsp; log as root.</li>
+
+<li>
+&nbsp; run `` make install '' in olsrd directory.</li>
+
+<li>
+&nbsp; run `` /usr/sbin/olsrd '' to startup the daemon.</li>
+
+<li>
+Take a look at the <a href="olsr-copyright.html">copyright</a>.</li>
+
+</ul>
+NB:If you find a bug, please send us a mail&nbsp; at &lt;<a
+href="mailto:anis.laouiti@inria.fr">anis.laouiti@inria.fr</a>&gt;, &lt;<a
+href="mailto:adokoe.plakoo@inria.fr">adokoe.plakoo@inria.fr</a>&gt;.
+
+<hr WIDTH="100%">
+<a name="simu"><h1>
+Simulation Code</h1></a>
+
+The current release&nbsp; is compliant to <a
+href="draft-ietf-manet-olsr-03.txt">draft-ietf-manet-olsr-03.txt</a>.
+
+<h3>Code</h3>
+
+<UL>
+<li>
+<a href="http://hipercom.inria.fr/olsr/olsrpatch.diff.gz">ns2 patch for OLSR</a>
+</UL>
+
+<h3>Installation instructions</h3>
+
+ This is a patch against ns version 2.1b7a. It adds OLSR to the
+ set of routing protocols available to ns2.
+
+<P>
+ From a fresh install of ns2, the following should apply the patch:
+
+<PRE>
+       patch -p1 < olsrpatch.diff
+       
+       (and recompile ns2)
+	
+       In the directory ns-2.1b7a/olsr, there is a README, describing the
+       configuration and use of the protocol.
+</PRE>
+
+<P>
+ This version of the code is primarilly developed by Lars Christensen and
+ Gitte Hansen. It is compliance with version 3 of the OLSR-draft, and
+ supports ns version 2.1b7a. Questions and comments should be directed
+ to &lt;<a href="mailto:T.Clausen@computer.org">T.Clausen@computer.org</a>&gt;.
+
+<P>
+ A version of the code, supporting the latest version of ns2, as well as
+ being fully compliant with version 5 of the OLSR-draft is in development,
+ and is expected to be released early 2002.
+
+
+
+<hr WIDTH="100%">
+<a name="papers"><h1>
+Related Publications</h1></a>
+
+<ul>
+<li>
+<a href="inmic2001.ps">Optimized Link State Routing Protocol</a><br>
+T. Clausen, P. Jacquet, A. Laouiti, P. Muhlethaler, a. Qayyum et L. Viennot,
+IEEE INMIC Pakistan 2001.
+
+<li>
+<a href="wpmc01.ps">The Optimized Link State Routing Protocol, Evaluation through
+Experiments and Simulation</a> T.H. Clausen, G. Hansen, L. Christensen
+and G. Behrmann, IEEE Symposium on "Wireless Personal Mobile Communications",
+september 2001.
+
+<li>
+<a href="hicss2001.ps">Multipoint Relaying: An Efficient
+Technique for Flooding in Mobile Wireless Networks</a>
+A. Laouiti, A. Qayyum et L. Viennot,
+35th Annual Hawaii International Conference on System Sciences
+(HICSS'2001)<br>
+
+
+<li>
+<a href="ftp://ftp.inria.fr/INRIA/publication/publi-ps-gz/RR/RR-4260.ps.gz">Performance
+Analysis of OLSR Multipoint Relay Flooding in Two Ad Hoc Wireless Network
+Models</a> P.Jacquet, A. Laouiti, P. Minet and L. Viennot, Research Report-4260,
+INRIA, September 2001, to appear in RSRCP journal special issue on
+Mobility and Internet.</li>
+
+<li>
+<a href="Amir-Qayyum-Thesis.ps">Analysis and evaluation of channel access
+schemes and routing protocols for wireless networks</a> A. Qayyum, Phd
+Thesis, November 2000.</li>
+
+<li>
+<a href="ftp://ftp.inria.fr/INRIA/publication/publi-ps-gz/RR/RR-3898.ps.gz">Multipoint
+Relaying: An Efficient Technique for flooding in Mobile Wireless Networks.</a>
+A.Qayyum, L. Viennot,and A.Laouiti, Research Report RR-3898, INRIA, February
+2000.</li>
+
+<li>
+<a href="ftp://ftp.inria.fr/INRIA/publication/publi-ps-gz/RR/RR-3965.ps.gz">Overhead
+in Mobile Ad hoc Network Protocols&nbsp;</a> P. Jacquet and L.Viennot,
+Research Report-3965, INRIA, June 2000.</li>
+
+<li>
+<a href="ftp://ftp.inria.fr/INRIA/publication/publi-ps-gz/RR/RR-3835.ps.gz">Analysis
+of mobile Ad hoc Protocols in Random Graph Models.</a> P. Jacquet and A.
+Laouiti, Research Report RR-3835, INRIA, December 1999.</li>
+
+</ul>
+
+<br>
+<hr WIDTH="100%">
+<br>Last modified 12/4/2001,
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>&nbsp;</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+
+</body>
+</html>

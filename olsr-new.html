@@ -1,0 +1,569 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="robots" content="index, follow">
+   <meta name="rating" content="General">
+   <meta name="distribution" content="Global">
+   <meta name="Date-Creation-yyyymmdd" content="20001208">
+   <meta name="Date-Revision-yyyymmdd" content="20010330">
+   <meta name="revisit-after" content="30 days">
+   <meta name="description" content="Implementation of the Optimized Link State Routing Protocol for wireless ad hoc networks">
+   <meta name="keywords" content="olsr,implementation,userspace">
+   <meta name="author" content="Anis LAOUITI">
+   <meta name="reply-to" content="anis.laouiti@inria.fr">
+   <meta name="owner" content="anis.laouiti@inria.fr">
+   <meta name="copyright" content="HIPERCOM 2000">
+   <title>OLSR Routing Protocol (RFC3626)</title>
+   <link rel="stylesheet" href="olsr.css" type="text/css" />
+
+</head>
+<body background="gradient.png" bgcolor="#ffffff">
+
+<!-- center -->
+<table border="2">
+<tr><td bgcolor="#ffffff">
+<img SRC="olsr3.gif" alt="OLSR - Optimized Link State Routing">
+</tr></td>
+</table>
+<!-- /center -->
+
+<hr WIDTH="100%">
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>&nbsp;</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+
+This page collects the <a
+href="http://hipercom.inria.fr/">HIPERCOM
+</a> work related to OLSR, including drafts, papers and code. 
+<BR><BR>
+<!--<a href="http://olsrinterop.free.fr/"><h3>OLSR Interop August 6-7</h3>
+ ----- <a href="http://www.olsr.net/interop/"><h3>(OLSR Interop technical
+parameters)</h3>
+</a>-->
+<a href="#intro"><h3>Introduction</h3></a>
+<a href="#drafts"><h3>Internet Drafts</h3></a>
+<a href="#code"><h3>Implementation code</h3></a>
+<a href="#qolsr"><h3>QoS and OLSR</h3></a>
+<a href="#simu"><h3>Simulation code</h3></a>
+<a href="#papers"><h3>Related Publications</h3></a>
+<a href="#papersfrench"><h3>Related Publications (french)</h3></a>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+&nbsp;</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+<hr WIDTH="100%">
+
+<a name="intro"><h1 class="barretitre">
+Introduction</h1></a>
+
+<P>
+The Optimized Link State Routing Protocol (OLSR) is developed for mobile ad
+hoc networks. It operates as a table driven and proactive protocol, thus
+exchanges topology information with other nodes of the network regularly.
+The nodes which are selected as a multipoint relay (MPR) by some neighbor
+nodes announce this information periodically in their control messages.
+Thereby, a node announces to the network, that it has reachability to the
+nodes which have selected it as MPR. In route calculation, the MPRs are used
+to form the route from a given node to any destination in the network. The
+protocol uses the MPRs to facilitate efficient flooding of control messages
+in the net- work.
+OLSR inherits the concept of forwarding and relaying from HIPERLAN (a MAC
+layer protocol) which is standardized by ETSI.
+</P>
+
+<ul>
+
+
+<li><a href="http://hipercom.inria.fr/~viennot/mpr/index.html">Some tips
+about multipoint relays</a></li>
+<li>A demonstration of <a href="mpr-flooding.html">MPR flooding</a> in Flash
+</li>
+<li>A graph of a <a href="olsr-example.html">small OLSR test network</a></li>
+<li>An <a href="#mailing-list">OLSR mailing-list</a>
+is now available.</li>
+
+
+<!--<li><strong>Three</strong> recent <a href="#newolsr">additional third party
+implementations</a> of OLSR, in C++, and compliant with RFC 3626.</li>-->
+
+<li><a href="http://olsrinterop.free.fr/">OLSR Interop August 6-7
+</a>
+----- <a href="http://www.olsr.net/interop/">(OLSR Interop technical
+parameters)</a>.</li> The interop was a success: all present (7) implementations
+could see each other (more on this later).
+
+<li><a href="http://hipercom.inria.fr/OOLSR/">OOLSR</a>, 
+the <a href="#OOLSR">INRIA C++ re-implementation</a> 
+of OLSR RFC 3626 (tested with IPv4 during the interop), 
+</li>
+
+<li class="new"><a href="/noa-olsr/">NOA-OLSR</a>, 
+the "No Overhead Autoconfiguration" algorithm 
+from Niigata University based. Implementation available
+<a href="/noa-olsr/">here</a>.
+</li>
+
+
+</ul>
+
+
+<hr WIDTH="100%">
+<a name="drafts"><h1 class="barretitre">
+IETF drafts/RFC</h1></a>
+
+OLSR is a proactive protocol of the <a href="http://www.ietf.org">IETF</a>
+working group <a href="http://www.ietf.org/html.charters/manet-charter.html">Manet</a>
+.
+
+<h3>OLSR RFC</h3>
+
+<ul>
+<li>
+<strong>The current version of OLSR&nbsp; is the definitive RFC 3626
+(<a href="rfc3626.txt">rfc3626.txt</a>)</strong>
+.</li>
+</ul>
+
+
+<h3>Related drafts</h3>
+
+<ul>
+<li> Extension for multicast (<a
+href="draft-ietf-manet-olsr-molsr.txt">draft-ietf-manet-olsr-molsr.txt</a>)
+</ul>
+
+
+<hr WIDTH="100%">
+<a name="code"><h1 class="barretitre">
+Implementation code of Optimized Link State Routing</h1></a>
+
+
+
+
+
+
+
+
+<!-- <h2>Other independent implementation/modification of OLSR (RFC 3626)</h2>
+-->
+<a name="newolsr2">
+<a name="newolsr">
+<a name="OOLSR">
+
+INRIA has an implementation of OLSR:
+<ul>
+<li>
+This <strong><a href="http://hipercom.inria.fr/OOLSR/">implementation
+from INRIA</a></strong> conforms to the RFC 3626
+of the OLSR and is designed for linux and NS2. It's a C++ re-implementation.
+Available on
+<strong><a href="http://hipercom.inria.fr/OOLSR/">OOLSR page</a></strong>
+(It obsoletes the prototype INRIA implementation in Python
+available on <a href="http://hipercom.inria.fr/pyOLSR/">pyOLSR page</a>)
+</li>
+<li>
+An autoconfiguration algorithm was developped at Niigata University
+in the laboratory of Pr. Mase. The implementation is based on OOLSR and 
+is available at:
+<strong><a href="/noa-olsr/">NOA-OLSR page</a></strong>.
+
+</li>
+<li>
+A Multicast and a Simple Multicast OLSR was implemented based on OOLSR. More
+information can be found in <strong><a href="/SMOLSR-MOLSR/">SMOLSR-MOLSR page</a></strong>. 
+</li>
+</ul>
+
+At least five other implementations of OLSR (RFC 3626) are publically 
+available:
+<ul>
+<li>An <strong><a href="http://pf.itd.nrl.navy.mil/projects/olsr/">implementation
+from the NRL</a></strong>
+(Naval Research Laboratory), <tt>nrlolsrd</tt> in C++, 
+essentially compliant with 
+RFC 3626 (but without multiple interfaces?) ;
+with IPv6 support. For Linux, NS simulator and others.</li>
+<br>
+
+<li>An <strong><a href="http://www.net.ie.niigata-u.ac.jp/~skame/olsr/">implementation
+from Niigata University</a></strong>, <tt>OLSR_Niigata</tt> ; 
+works with GloMoSim.</li>
+<br>
+<li>An <strong><a href="http://qolsr.lri.fr/">implementation from the LRI</a>
+</strong>
+(Laboratoire de Recherche en Informatique), <tt>qolyester</tt>, in C++,
+compliant with RFC 3626, with IPv6 support. For Linux. </li>
+<br>
+<li>
+An <strong><a href="http://www.grc.upv.es/software/index.html">implementation
+from GRC</a></strong>(Polytechnic University of Valencia
+ Department of Computer Engineering), conformant with RFC 3626,
+in C for Windows 2000.</li>
+<br>
+<li>
+A popular
+<strong><a href="http://www.olsr.org/">
+implementation from UniK University</a></strong>[olsr.org], in C, conformant
+with RFC 3626.
+A complete rewrite of OLSR protocol.
+</li>
+<br>
+
+<li>An <strong><a 
+href="http://www.crc.ca/en/html/manetsensor/home/research_area/routing">
+implementation from CRC</a></strong>
+ the Communication Research Centre in Canada,
+on IPv6, compliant with RFC 3626.
+</ul>
+
+
+<hr WIDTH="100%">
+<a name="simu"><h1 class="barretitre">
+Autoconfiguration and OLSR</h1></a>
+<a name="noa-olsr">
+
+NOA-OLSR, is an extension for autoconfiguration from Niigata University.
+More information is available on <strong><a href="/noa-olsr/">NOA-OLSR page</a></strong>, including the specification of the protocol and its implementation.
+
+
+<hr WIDTH="100%">
+<a name="simu"><h1 class="barretitre">
+QoS and OLSR</h1></a>
+<a name="qolsr">
+
+The LRI (Laboratoire de Recherche en Informatique) is working on
+<a href="http://qolsr.lri.fr/">QOLSR</a>, an effort to study and implement 
+state-of-the-art QoS support in a working implementation of the OLSR protocol
+for mobile ad hoc wireless networks. 
+<p>The initial implementation of the core 
+OLSR protocol, <tt>qolyester</tt>,
+is already <a href="http://qolsr.lri.fr/">available</a>.
+
+
+<hr WIDTH="100%">
+<a name="mailing-list"><h1 class="barretitre">
+Mailing list</h1></a>
+
+<strong>UPDATE: this mailing-list is in no way
+official, and due to low traffic is only marginally useful. 
+The MANET mailing-list may be more appropriate. See IETF working group
+for up-to-date information about protocol developpement.</strong>
+<p>
+
+(A mailing list about the protocol and the implementation (implementors) 
+of OLSR. Topics suitable for the list include:
+<ul>
+<li>Discussion of the features of the OLSR protocol (like MPR
+calculation for instance).</li>
+<li>Discussion of implementation issues of the OLSR protocol (like
+jitter implementation for instance).</li>
+<li>Announcement of OLSR implementations, and discussion of their features</li>
+<li>Discussion of extension to the OLSR protocol (like security)</li>
+<li>...</li>
+</ul>
+(however discussions unrelated to the protocol itself,
+such as details about how to compile, configure, run, and otherwise 
+operate a specific implementation of OLSR, are not appropriate).
+<p>
+The mailing list can be found 
+<strong><a href="http://sympa-rocq.inria.fr/wws/info/olsr">here</a>)</strong>.
+
+
+
+<hr WIDTH="100%">
+<a name="older"><h1 class="barretitre">
+Previous implementations</h1></a>
+
+
+<h2>INRIA implementation in C, OLSRv3</h2>
+
+This implementation is conform with the version
+3 of the OLSR draft and is designed for linux 2.x.x.
+<ul>
+<li>
+This code&nbsp; runs in user
+space.</li>
+
+<li>
+No Kernel modification required.</li>
+</ul>
+
+
+<h3>
+Code</h3>
+The current release&nbsp; is compliant to <a
+href="draft-ietf-manet-olsr-03.txt">draft-ietf-manet-olsr-03.txt</a>
+and available as a gzipped tar file.
+<ul>
+<li>
+<a href="http://hipercom.inria.fr/olsr/olsrd.tar.gz">linux source code</a></li>
+</ul>
+
+<h3>
+Installation &amp; Use</h3>
+After unpacking olsrd.tar.gz in home directory, compile and install as
+described after:
+<ul>
+<li>
+&nbsp; run `` make all '' in the new olsrd directory.</li>
+
+<li>
+&nbsp; log as root.</li>
+
+<li>
+&nbsp; run `` make install '' in olsrd directory.</li>
+
+<li>
+&nbsp; run `` /usr/sbin/olsrd '' to startup the daemon.</li>
+
+<li>
+Take a look at the <a href="olsr-copyright.html">copyright</a>.</li>
+
+</ul>
+NB:If you find a bug, please send us a mail&nbsp; at
+<a href="http://hipercom.inria.fr/~laouiti">Anis Laouiti </a>&lt;<a
+href="mailto:anis.laouiti@inria.fr">anis.laouiti@inria.fr</a>&gt;, Adokoe
+Plakoo &lt;<a
+href="mailto:adokoe.plakoo@inria.fr">adokoe.plakoo@inria.fr</a>&gt;.
+
+
+
+
+<a name="windows">
+<h2>Ports of INRIA OLSRv3</h2></a>
+
+The INRIA OLSR daemon (described and available in next section) 
+was ported to Windows 2000 & Pocket PC by Carlos Miguel Tavares Calafate, 
+<a href="http://reptar.grc.upv.es/">GRC</a> ,  
+<a href="http://www.upv.es/">UPV</a>, Spain, under supervision of 
+ Dr. Pietro Manzoni. This excellent port is available on
+their
+<a href="http://reptar.grc.upv.es/~calafate/olsr/olsr.htm">
+OLSR for Windows page</a>
+<p>
+The GRC has also an <a href="#newcode">new implementation for Windows 2000</a>.
+
+
+
+<hr WIDTH="100%">
+<a name="simu"><h1 class="barretitre">
+Simulation Code</h1></a>
+
+The current release&nbsp; is compliant to <a
+href="draft-ietf-manet-olsr-03.txt">draft-ietf-manet-olsr-03.txt</a>.
+
+<h3>Code</h3>
+
+<UL>
+<li>
+<a href="http://hipercom.inria.fr/olsr/olsrpatch.diff.gz">ns2 patch for OLSR</a>
+</UL>
+
+<h3>Installation instructions</h3>
+
+ This is a patch against ns version 2.1b7a. It adds OLSR to the
+ set of routing protocols available to ns2.
+
+<P>
+ From a fresh install of ns2, the following should apply the patch:
+
+<PRE>
+       patch -p1 < olsrpatch.diff
+       
+       (and recompile ns2)
+	
+       In the directory ns-2.1b7a/olsr, there is a README, describing the
+       configuration and use of the protocol.
+</PRE>
+
+<P>
+ This version of the code is primarilly developed by Lars Christensen and
+ Gitte Hansen. It is compliance with version 3 of the OLSR-draft, and
+ supports ns version 2.1b7a. Questions and comments should be directed
+ to &lt;<a href="mailto:T.Clausen@computer.org">T.Clausen@computer.org</a>&gt;.
+
+<P>
+<!-- A version of the code, supporting the latest version of ns2, as well as
+ being fully compliant with version 5 of the OLSR-draft is in development,
+ and is expected to be released early 2002.-->
+
+<h3>Pre-installed system with OLSRv3 code</h3>
+
+A Linux system, with NS2, OLSR patches, and able to compile both is available
+as
+<a href="http://hipercom.inria.fr/olsr/NS2/Debian-NS2-OLSRv3-0.0.1.tar.gz">
+Debian-NS2-OLSRv3-0.0.1.tar.gz</a>, if you have troubles installing it by
+yourself, see associated <a
+href="http://hipercom.inria.fr/olsr/NS2/Debian-NS2-OLSRv3-0.0.1/README">README
+</a> file. This is unsupported.
+
+
+<hr WIDTH="100%">
+<a name="papers"><h1 class="barretitre">
+Related Publications</h1></a>
+
+<ul>
+<li>
+<a href="inmic2001.ps">Optimized Link State Routing Protocol</a><br>
+T. Clausen, P. Jacquet, A. Laouiti, P. Muhlethaler, a. Qayyum et L. Viennot,
+IEEE INMIC Pakistan 2001.
+
+<li>
+<a href="medhoc.ps">Simulation Results of the OLSR Routing Protocol for
+Wireless Network</a><br>
+A. Laouiti, P. Muhlethaler, A. Najid, E. Plakoo, 1st Mediterranean Ad-Hoc Networks workshop (Med-Hoc-Net), Sardegna, Italy 2002.
+
+<li>
+<a href="networking2002.ps"> Performance of multipoint relaying in ad hoc mobile routing protocols</a><br>  
+P. Jacquet, A. Laouiti, P. Minet, L. Viennot, Networking 2002, Pise(Italy)2002.
+<a href="networking2002_slides.ps">slides</a>.
+
+<li>
+<a href="wpmc01.ps">The Optimized Link State Routing Protocol, Evaluation through
+Experiments and Simulation</a> T.H. Clausen, G. Hansen, L. Christensen
+and G. Behrmann, IEEE Symposium on "Wireless Personal Mobile Communications",
+september 2001.
+
+<li>
+<a href="hicss2001.ps">Multipoint Relaying: An Efficient
+Technique for Flooding in Mobile Wireless Networks</a>
+A. Laouiti, A. Qayyum et L. Viennot,
+35th Annual Hawaii International Conference on System Sciences
+(HICSS'2002)<br>
+
+<li>
+<a href="securing-olsr.ps.gz">Securing the OLSR Protocol</a>
+C. Adjih, T. Clausen, P. Jacquet, A. Laouiti, P. Mühlethaler, and D. Raffo,
+Med-Hoc-Net 2003, Mahdia, Tunisia, June 25-27, 2003
+<br>
+
+<li>
+<a href="olsr-ipv6-medhoc04.ps">OLSR for IPv6 networks</a>
+A. Laouiti, S. Boudjit, P. Minet, C. Adjih, Med-Hoc-Net 2004, 27-30 Juin,
+2004, Bodrum (Turkey).<br>
+
+<li>
+<a href="WINET2003-BENZAID.ps.gz"> Integration of Mobile-IP and OLSR for a universal Mobility</a>, M. Benzaid, P. Minet, K. Al Agha, C. Adjih and G. Allard, To appear in Wireless Networks journal (Winet), Special Issue on Ad-hoc Networking. 
+</li>
+
+<li>
+<a href="VTC2003-BENZAID.ps"> Analysis and simulation of Fast-OLSR </a>, M. Benzaid, P. Minet, K. Al Agha, Proceedings of the 57th IEEE Semiannual Vehicular Technology Conference (VTC), Jeju Korea, April 2003. 
+</li>                        
+<li>
+<a href="MWCN2002-BENZAID.ps"> Integrating fast mobility in the OLSR routing protocol</a>, M. Benzaid, P. Minet, K. Al Agha, Fourth IEEE Conference on Mobile and Wireless Communications Networks (MWCN), Stockholm Sweden, September 2002. 
+</li>
+<li>                        
+<a href="MEDHOC2002-BENZAID.ps"> A framework for integrating Mobile-IP and OLSR ad-hoc networking for future wireless mobile systems</a>, M. Benzaid, P. Minet, K. Al Agha, 1st Mediterranean Ad-Hoc Networks workshop (Med-Hoc-Net), Sardegna Italy, September 2002. 
+</li>
+<li>
+<a href="ftp://ftp.inria.fr/INRIA/publication/publi-ps-gz/RR/RR-4260.ps.gz">Performance
+Analysis of OLSR Multipoint Relay Flooding in Two Ad Hoc Wireless Network
+Models</a> P.Jacquet, A. Laouiti, P. Minet and L. Viennot, Research Report-4260,
+INRIA, September 2001, RSRCP journal special issue on
+Mobility and Internet.</li>
+
+<li>
+<a href="Amir-Qayyum-Thesis.ps">Analysis and evaluation of channel access
+schemes and routing protocols for wireless networks</a> A. Qayyum, Phd
+Thesis, November 2000.</li>
+
+<li>
+<a href="ftp://ftp.inria.fr/INRIA/publication/publi-ps-gz/RR/RR-3898.ps.gz">Multipoint
+Relaying: An Efficient Technique for flooding in Mobile Wireless Networks.</a>
+A.Qayyum, L. Viennot,and A.Laouiti, Research Report RR-3898, INRIA, February
+2000.</li>
+
+<li>
+<a href="ftp://ftp.inria.fr/INRIA/publication/publi-ps-gz/RR/RR-3965.ps.gz">Overhead
+in Mobile Ad hoc Network Protocols&nbsp;</a> P. Jacquet and L.Viennot,
+Research Report-3965, INRIA, June 2000.</li>
+
+<li>
+<a href="ftp://ftp.inria.fr/INRIA/publication/publi-ps-gz/RR/RR-3835.ps.gz">Analysis
+of mobile Ad hoc Protocols in Random Graph Models.</a> P. Jacquet and A.
+Laouiti, Research Report RR-3835, INRIA, December 1999.</li>
+
+</ul>
+
+<hr WIDTH="100%">
+<a name="papersfrench"><h1 class="barretitre">
+Related Publications (french)</h1></a>
+
+<ul>
+<li>
+Unicast et Multicast dans les réseaux adhoc sans fil, A. Laouiti Phd Thesis, July 2002.
+(<a href="these-Anis-Laouiti.ps.gz">ps format</a>, <a
+href="These-Anis-Laouiti.pdf.gz">pdf format</a>)
+</li>
+
+<li>
+<a href="setit2003.pdf">Mesures des performances du protocole OLSR</a>
+A. Laouiti and C. Adjih, IEEE SETIT2003 Tunisia March 2003. 
+</li>
+</ul>
+
+<br>
+<hr WIDTH="100%">
+<br>Last modified 2005.
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>&nbsp;</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+<h3>OLSR drafts</h3>
+
+The previous versions of the draft, for archival purposes:
+<ul>
+<li>
+version 11 (<a href="draft-ietf-manet-olsr-11.txt">draft-ietf-manet-olsr-11.txt</a>).
+<li>
+version 10 (<a href="draft-ietf-manet-olsr-10.txt">draft-ietf-manet-olsr-10.txt</a>).
+<li>
+version 9 (<a href="draft-ietf-manet-olsr-09.txt">draft-ietf-manet-olsr-09.txt</a>).
+<li>
+version 8 (<a href="draft-ietf-manet-olsr-08.txt">draft-ietf-manet-olsr-08.txt</a>).
+<li>
+version 7 (<a href="draft-ietf-manet-olsr-07.txt">draft-ietf-manet-olsr-07.txt</a>).
+<li>
+version 6 (<a href="draft-ietf-manet-olsr-06.txt">draft-ietf-manet-olsr-06.txt</a>).
+<li>
+version 5 (<a href="draft-ietf-manet-olsr-05.txt">draft-ietf-manet-olsr-05.txt</a>):
+The most important change from version 4 to version 5 is&nbsp; the introduction
+of support for multiple interfaces.
+<li>
+version 4 (<a href="draft-ietf-manet-olsr-04.txt">draft-ietf-manet-olsr-04.txt</a>).
+<li>
+You can find the specification of the implementation here
+(<a href="draft-ietf-manet-olsr-03.txt">draft-ietf-manet-olsr-03.txt</a>).
+</ul>
+
+</body>
+</html>

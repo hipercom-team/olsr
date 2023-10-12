@@ -1,0 +1,11 @@
+
+.barretitre { background-color: #c5cae2; 
+  font-family: verdana,geneva,arial,helvetica,sans-serif;
+  border-color: black;
+  border-style: solid;
+  border-width: 1pt;
+} 
+
+.new {
+color: #c00000;
+} 
